@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Pirate Crew Builder</title>
+    <meta name="description" content="A Catalog of Shows Set in Los Angeles" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Pirata+One&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <div id="root">
+      <header>
+        <h1 class="title">Build Your One Piece Pirate Crew</h1>
+        <div id="crew">
+          <div class="placeholder"></div>
+          <div class="placeholder"></div>
+          <div class="placeholder"></div>
+          <div class="placeholder"></div>
+          <div class="placeholder"></div>
+        </div>
+        <p id="average-strength">Average Strength:</p>
+        <form id="filter-form">
+          <div>
+            <label for="affiliation">Affiliation:</label>
+            <select name="affiliation" id="affiliation">
+              <option value="">Any</option>
+              <option value="Strawhat Pirates">Strawhat Pirates</option>
+              <option value="Red Haired Pirates">Red Haired Pirates</option>
+              <option value="Black Beard Pirates">Black Beard Pirates</option>
+              <option value="Beast Pirates">Beast Pirates</option>
+              <option value="Big Mom Pirates">Big Mom Pirates</option>
+              <option value="Buggy Pirates">Buggy Pirates</option>
+              <option value="Cross Guild">Cross Guild</option>
+              <option value="Admirals">Admirals</option>
+              <option value="CP-0">CP-0</option>
+              <option value="Vice Admiral">Vice Admiral</option>
+              <option value="Revolutionary Army">Revolutionary Army</option>
+              <option value="Roger Pirates">Roger Pirates</option>
+              <option value="Whitebeard Pirates">Whitebeard Pirates</option>
+              <option value="Donquixote Pirates">Donquixote Pirates</option>
+              <option value="Thriller Bark Pirates">Thriller Bark Pirates</option>
+              <option value="Kuja Pirates">Kuja Pirates</option>
+              <option value="Heart Pirates">Heart Pirates</option>
+              <option value="Kid Pirates">Kid Pirates</option>
+              <option value="Mink Tribe">Mink Tribe</option>
+            </select>
+          </div>
+          <div>
+            <label for="strength">Strength:</label>
+            <input
+              type="range"
+              name="strength"
+              id="strength"
+              min="1"
+              max="10"
+              value="10"
+            />
+            <span id="strengthValue">10</span>
+          </div>
+          <div>
+            <label for="faction">Faction:</label>
+            <select name="faction" id="faction">
+              <option value="">Any</option>
+              <option value="Pirate">Pirate</option>
+              <option value="Navy">Navy</option>
+              <option value="Government">Government</option>
+              <option value="Revolutionary Army">Revolutionary Army</option>
+              <option value="Mink">Mink</option>
+            </select>
+          </div>
+          <div>
+            <label for="haki">Haki:</label>
+            <select name="haki" id="haki">
+              <option value="Conquerors">Conquerors</option>
+              <option value="Armament">Armament</option>
+              <option value="Observation">Observation</option>
+              <option value="">None</option>
+            </select>
+          </div>
+          <div>
+            <input type="checkbox" id="isEmperor" name="isEmperor" value="emperor">
+            <label for="isEmperor">Emperor</label>
+          </div>
+          <div>
+            <input type="checkbox" id="isWarlord" name="isWarlord" value="warlord">
+            <label for="isWarlord">Warlord</label>
+          </div>
+          <div>
+            <input type="checkbox" id="isWorstGeneration" name="isWorstGeneration" value="worst generation">
+            <label for="isWorstGeneration">Worst Generation</label>
+          </div>
+          <div>
+            <input type="checkbox" id="isKing" name="isKing" value="king">
+            <label for="isKing">King of the Pirates</label>
+          </div>
+          <button type="submit">Apply Filters</button>
+        </form>
+        <p>Scroll down to see the characters</p>
+      </header>
+
+
+      <main id="catalog"></main>
+
+      <div class="footer"></div>
+    </div>
+
+    <script type="text/javascript" src="data.js"></script>
+    <script type="text/javascript" src="scripts.js"></script>
+  </body>
+</html>
