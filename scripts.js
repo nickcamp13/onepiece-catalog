@@ -1,112 +1,149 @@
-const selectedCharacters = []; // Helps with tracking characters that users select
+const pirateCrew = []; // Helps with tracking characters that users select
 
-document.addEventListener("DOMContentLoaded", () => {
-  const catalog = document.getElementById("catalog");
+// Users can add/remove characters to/from their pirate crew
+function updateCrewDisplay() {
   const placeholders = document.querySelectorAll(".placeholder");
   const averageStrengthDisplay = document.getElementById("average-strength");
 
-  function updateCrewDisplay() {
-    placeholders.forEach((placeholder, index) => {
-      placeholder.style.backgroundImage = selectedCharacters[index]
-        ? `url(${selectedCharacters[index].image})`
-        : "";
-    });
-    const totalStrength = selectedCharacters.reduce(
-      (acc, char) => acc + char.strength,
-      0
+  placeholders.forEach((placeholder, index) => {
+    placeholder.style.backgroundImage = pirateCrew[index]
+      ? `url(${pirateCrew[index].image})`
+      : "";
+  });
+  const totalStrength = pirateCrew.reduce(
+    (acc, char) => acc + char.strength,
+    0
+  );
+  const averageStrength =
+    pirateCrew.length > 0
+      ? (totalStrength / pirateCrew.length).toFixed(2)
+      : 0;
+  averageStrengthDisplay.textContent = `Crews Average Strength: ${averageStrength}`;
+}
+
+// Returns an array of character objects if the character meets applied filter
+// criteria.
+function filterCharacters() {
+  const affiliation = document.getElementById("affiliation").value;
+  const strength = document.getElementById("strength").value;
+  const faction = document.getElementById("faction").value;
+  const haki = document.getElementById("haki").value;
+  const emperor = document.getElementById("isEmperor").checked;
+  const warlord = document.getElementById("isWarlord").checked;
+  const worstgen = document.getElementById("isWorstGeneration").checked;
+  const king = document.getElementById("isKing").checked;
+
+  return characters.filter((character) => {
+    return (
+      (affiliation ? character.affiliation === affiliation : true) &&
+      (character.strength <= strength) &&
+      (faction ? character.faction === faction : true) &&
+      (haki ? character.abilities.haki.includes(haki) : true) &&
+      (!emperor || character.isEmperor === emperor) &&
+      (!warlord || character.isWarlord === warlord) &&
+      (!worstgen || character.isWorstGeneration === worstgen) &&
+      (!king || character.isKing === king)
     );
-    const averageStrength =
-      selectedCharacters.length > 0
-        ? (totalStrength / selectedCharacters.length).toFixed(2)
-        : 0;
-    averageStrengthDisplay.textContent = `Crews Average Strength: ${averageStrength}`;
-  }
+  });
+}
 
-  function filterCharacters() {
-    // const affiliation
-  }
+// Characters will be displayed in the catalog when the dom content is loaded or
+// when filters are applied
+function displayCharacters(characterList) {
+  const catalog = document.getElementById("catalog");
+  catalog.innerHTML = "";
 
-  function displayCharacters(characterList) {
-    characterList.forEach((character) => {
-      const characterContainer = document.createElement("div");
-      characterContainer.className = "character-container";
+  // Make a container for all characters in the dataset
+  characterList.forEach((character) => {
+    const characterContainer = document.createElement("div");
+    characterContainer.className = "character-container";
 
-      // set up name element + styling based on status
-      const nameElement = document.createElement("h3");
-      nameElement.innerText = character.name;
-      nameElement.className = "character-name";
-      if (character.isKing) {
-        nameElement.classList.add("king");
-      } else if (character.isAdmiral) {
-        nameElement.classList.add("admiral");
-      } else if (character.isEmperor) {
-        nameElement.classList.add("emperor");
-      } else if (character.isWorstGeneration) {
-        nameElement.classList.add("worst-gen");
-      } else if (character.isWarlord) {
-        nameElement.classList.add("warlord");
-      }
+    // set up name element + styling based on status
+    const nameElement = document.createElement("h3");
+    nameElement.innerText = character.name;
+    nameElement.className = "character-name";
+    if (character.isKing) {
+      nameElement.classList.add("king");
+    } else if (character.isAdmiral) {
+      nameElement.classList.add("admiral");
+    } else if (character.isEmperor) {
+      nameElement.classList.add("emperor");
+    } else if (character.isWorstGeneration) {
+      nameElement.classList.add("worst-gen");
+    } else if (character.isWarlord) {
+      nameElement.classList.add("warlord");
+    }
 
-      // Set devil fruit and Haki strings
-      let devilFruit = "";
-      let haki = "";
-      for (let key in character.abilities) {
-        if (typeof character.abilities[key] === "string") {
-          devilFruit += character.abilities[key];
-        } else if (Array.isArray(character.abilities[key])) {
-          for (let item of character.abilities[key]) {
-            haki += item + " ";
-          }
+    // Set devil fruit and Haki strings
+    let devilFruit = "";
+    let haki = "";
+    for (let key in character.abilities) {
+      if (typeof character.abilities[key] === "string") {
+        devilFruit += character.abilities[key];
+      } else if (Array.isArray(character.abilities[key])) {
+        for (let item of character.abilities[key]) {
+          haki += item + " ";
         }
       }
-      devilFruit = devilFruit.trim();
-      haki = haki.trim();
+    }
+    devilFruit = devilFruit.trim();
+    haki = haki.trim();
 
-      // Build character info section
-      const card = document.createElement("div");
-      card.className = "card";
-      card.innerHTML = `
-        <img src="${character.image}" alt="${character.name}"/>
-        <div class="info">
-          <ul class="stats">
-            <li>Affiliation: <span class="stat-txt">${character.affiliation}</span></li>
-            <li>Faction: <span class="stat-txt">${character.faction}</span></li>
-          </ul>
-        </div>
-      `;
-      // Characters without devil fruit or haki powers will have these
-      // stats excluded from their info card
-      if (devilFruit !== "") {
-        const dfElement = document.createElement("li");
-        dfElement.innerHTML = `Devil Fruit: <span class="stat-txt">${devilFruit}</span>`;
-        card.querySelector(".stats").appendChild(dfElement);
+    // Build character info section
+    const card = document.createElement("div");
+    card.className = "card";
+    card.innerHTML = `
+      <img src="${character.image}" alt="${character.name}"/>
+      <div class="info">
+        <ul class="stats">
+          <li>Affiliation: <span class="stat-txt">${character.affiliation}</span></li>
+          <li>Faction: <span class="stat-txt">${character.faction}</span></li>
+        </ul>
+      </div>
+    `;
+    // Characters without devil fruit or haki powers will have these
+    // stats excluded from their info card
+    if (devilFruit !== "") {
+      const dfElement = document.createElement("li");
+      dfElement.innerHTML = `Devil Fruit: <span class="stat-txt">${devilFruit}</span>`;
+      card.querySelector(".stats").appendChild(dfElement);
+    }
+    if (haki !== "") {
+      const hakiElement = document.createElement("li");
+      hakiElement.innerHTML = `Haki: <span class="stat-txt">${haki}</span>`;
+      card.querySelector(".stats").appendChild(hakiElement);
+    }
+
+    // Users add characters to their crew by clicking on cards,
+    // They remove them by clicking on them again
+    characterContainer.addEventListener("click", () => {
+      // Remove the character if it already exists in pirateCrew
+      if (pirateCrew.includes(character)) {
+        pirateCrew.splice(pirateCrew.indexOf(character), 1);
+      } else if (pirateCrew.length < 5) {
+        pirateCrew.push(character);
       }
-      if (haki !== "") {
-        const hakiElement = document.createElement("li");
-        hakiElement.innerHTML = `Haki: <span class="stat-txt">${haki}</span>`;
-        card.querySelector(".stats").appendChild(hakiElement);
-      }
-
-      characterContainer.addEventListener("click", () => {
-        // Remove the character if it already exists in selectedCharacters
-        if (selectedCharacters.includes(character)) {
-          selectedCharacters.splice(selectedCharacters.indexOf(character), 1);
-        } else if (selectedCharacters.length < 5) {
-          selectedCharacters.push(character);
-        }
-        updateCrewDisplay();
-      });
-
-      // added accessibility for mobile device users
-      card.addEventListener("click", () => {
-        card.classList.toggle("clicked");
-      });
-
-      characterContainer.appendChild(nameElement);
-      characterContainer.appendChild(card);
-      catalog.appendChild(characterContainer);
+      updateCrewDisplay();
     });
-  }
 
+    // added accessibility for mobile device users
+    card.addEventListener("click", () => {
+      card.classList.toggle("clicked");
+    });
+
+    // Create character container and add to catalog
+    characterContainer.appendChild(nameElement);
+    characterContainer.appendChild(card);
+    catalog.appendChild(characterContainer);
+  });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
   displayCharacters(characters);
+
+  document.getElementById('filter-form').addEventListener('submit', (event) => {
+    event.preventDefault();
+    const filteredCharacters = filterCharacters();
+    displayCharacters(filteredCharacters);
+  })
 });
