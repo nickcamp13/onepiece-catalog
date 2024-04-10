@@ -15,9 +15,7 @@ function updateCrewDisplay() {
     0
   );
   const averageStrength =
-    pirateCrew.length > 0
-      ? (totalStrength / pirateCrew.length).toFixed(2)
-      : 0;
+    pirateCrew.length > 0 ? (totalStrength / pirateCrew.length).toFixed(2) : 0;
   averageStrengthDisplay.textContent = `Crews Average Strength: ${averageStrength}`;
 }
 
@@ -25,7 +23,7 @@ function updateCrewDisplay() {
 // criteria.
 function filterCharacters() {
   const affiliation = document.getElementById("affiliation").value;
-  const strength = document.getElementById("strength").value;
+  const strength = document.getElementById("strength-slider").value;
   const faction = document.getElementById("faction").value;
   const haki = document.getElementById("haki").value;
   const emperor = document.getElementById("isEmperor").checked;
@@ -36,7 +34,7 @@ function filterCharacters() {
   return characters.filter((character) => {
     return (
       (affiliation ? character.affiliation === affiliation : true) &&
-      (character.strength <= strength) &&
+      character.strength <= strength &&
       (faction ? character.faction === faction : true) &&
       (haki ? character.abilities.haki.includes(haki) : true) &&
       (!emperor || character.isEmperor === emperor) &&
@@ -139,11 +137,65 @@ function displayCharacters(characterList) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+  // Initially Display All Characters
   displayCharacters(characters);
 
-  document.getElementById('filter-form').addEventListener('submit', (event) => {
+  // Update displayed characters when filters are applied
+  document.getElementById("filter-form").addEventListener("submit", (event) => {
     event.preventDefault();
     const filteredCharacters = filterCharacters();
     displayCharacters(filteredCharacters);
-  })
+  });
+
+  // Update strength value whenever the slider's value changes
+  const slider = document.getElementById("strength-slider");
+  const display = document.getElementById("strength-value");
+  slider.addEventListener("input", function () {
+    display.textContent = this.value;
+  });
+
+  // Handle functionality for adding characters
+  const addBtn = document.getElementById("add-character");
+  const addForm = document.getElementById("add-character-form");
+  addBtn.addEventListener("click", () => {
+    if (addForm.style.display === "none") {
+      addForm.style.display = "flex";
+      addBtn.innerText = "Close Form";
+    } else {
+      addForm.style.display = "none";
+      addBtn.innerText = "Add Your Own Character";
+    }
+  });
+
+  addForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    // build new character from form
+    const newCharacter = {
+      name: document.getElementById("add-name").value,
+      image: document.getElementById("add-image").value,
+      affiliation: document.getElementById("add-affiliation").value,
+      faction: document.getElementById("add-faction").value,
+      abilities: {
+        devilFruit: document.getElementById("add-devilFruit").value || null,
+        haki: Array.from(
+          document.getElementById("add-haki").selectedOptions
+        ).map((option) => option.value),
+      },
+      strength: parseInt(document.getElementById("add-strength").value, 10),
+      isEmperor: document.getElementById("add-isEmperor").checked,
+      isWarlord: document.getElementById("add-isWarlord").checked,
+      isWorstGeneration: document.getElementById("add-isWorstGeneration")
+        .checked,
+      isAdmiral: document.getElementById("add-isAdmiral").checked,
+      isKing: false, // New characters are always false for isKing
+    };
+
+    // add the character to dataset
+    characters.push(newCharacter);
+    displayCharacters(characters);
+    addForm.style.display = "none";
+    addForm.reset();
+    addBtn.innerText = "Add Your Own Character";
+  });
 });

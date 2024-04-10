@@ -19,7 +19,8 @@
   <body>
     <div id="root">
       <header>
-        <h1 class="title">Build Your One Piece Pirate Crew</h1>
+        <h1 id="title">Build Your One Piece Pirate Crew</h1>
+
         <div id="crew">
           <div class="placeholder"></div>
           <div class="placeholder"></div>
@@ -27,90 +28,223 @@
           <div class="placeholder"></div>
           <div class="placeholder"></div>
         </div>
+
         <p id="average-strength">Average Strength:</p>
-        <form id="filter-form">
-          <div>
-            <label for="affiliation">Affiliation:</label>
-            <select name="affiliation" id="affiliation">
-              <option value="">Any</option>
-              <option value="Strawhat Pirates">Strawhat Pirates</option>
-              <option value="Red Haired Pirates">Red Haired Pirates</option>
-              <option value="Black Beard Pirates">Black Beard Pirates</option>
-              <option value="Beast Pirates">Beast Pirates</option>
-              <option value="Big Mom Pirates">Big Mom Pirates</option>
-              <option value="Buggy Pirates">Buggy Pirates</option>
-              <option value="Cross Guild">Cross Guild</option>
-              <option value="Admirals">Admirals</option>
-              <option value="CP-0">CP-0</option>
-              <option value="Vice Admiral">Vice Admiral</option>
-              <option value="Revolutionary Army">Revolutionary Army</option>
-              <option value="Roger Pirates">Roger Pirates</option>
-              <option value="Whitebeard Pirates">Whitebeard Pirates</option>
-              <option value="Donquixote Pirates">Donquixote Pirates</option>
-              <option value="Thriller Bark Pirates">Thriller Bark Pirates</option>
-              <option value="Kuja Pirates">Kuja Pirates</option>
-              <option value="Heart Pirates">Heart Pirates</option>
-              <option value="Kid Pirates">Kid Pirates</option>
-              <option value="Mink Tribe">Mink Tribe</option>
-            </select>
-          </div>
-          <div>
-            <label for="strength">Strength:</label>
-            <input
-              type="range"
-              name="strength"
-              id="strength"
-              min="1"
-              max="10"
-              value="10"
-            />
-            <span id="strengthValue">10</span>
-          </div>
-          <div>
-            <label for="faction">Faction:</label>
-            <select name="faction" id="faction">
-              <option value="">Any</option>
-              <option value="Pirate">Pirate</option>
-              <option value="Navy">Navy</option>
-              <option value="Government">Government</option>
-              <option value="Revolutionary Army">Revolutionary Army</option>
-              <option value="Mink">Mink</option>
-            </select>
-          </div>
-          <div>
-            <label for="haki">Haki:</label>
-            <select name="haki" id="haki">
-              <option value="">Any</option>
-              <option value="Conquerors">Conquerors</option>
-              <option value="Armament">Armament</option>
-              <option value="Observation">Observation</option>
-            </select>
-          </div>
-          <div>
-            <input type="checkbox" id="isEmperor" name="isEmperor" value="emperor">
-            <label for="isEmperor">Emperor</label>
-          </div>
-          <div>
-            <input type="checkbox" id="isWarlord" name="isWarlord" value="warlord">
-            <label for="isWarlord">Warlord</label>
-          </div>
-          <div>
-            <input type="checkbox" id="isWorstGeneration" name="isWorstGeneration" value="worst generation">
-            <label for="isWorstGeneration">Worst Generation</label>
-          </div>
-          <div>
-            <input type="checkbox" id="isKing" name="isKing" value="king">
-            <label for="isKing">King of the Pirates</label>
-          </div>
-          <button type="submit">Apply Filters</button>
-        </form>
-        <p>Scroll down to see the characters</p>
+
+        <div class="form-container">
+          <form id="filter-form">
+            <div class="form-inputs">
+              <div>
+                <label for="affiliation">Affiliation:</label>
+                <select name="affiliation" id="affiliation">
+                  <option value="">Any</option>
+                  <option value="Strawhat Pirates">Strawhat Pirates</option>
+                  <option value="Red Haired Pirates">Red Haired Pirates</option>
+                  <option value="Black Beard Pirates">
+                    Black Beard Pirates
+                  </option>
+                  <option value="Beast Pirates">Beast Pirates</option>
+                  <option value="Big Mom Pirates">Big Mom Pirates</option>
+                  <option value="Buggy Pirates">Buggy Pirates</option>
+                  <option value="Cross Guild">Cross Guild</option>
+                  <option value="Admirals">Admirals</option>
+                  <option value="CP-0">CP-0</option>
+                  <option value="Vice Admiral">Vice Admiral</option>
+                  <option value="Revolutionary Army">Revolutionary Army</option>
+                  <option value="Roger Pirates">Roger Pirates</option>
+                  <option value="Whitebeard Pirates">Whitebeard Pirates</option>
+                  <option value="Donquixote Pirates">Donquixote Pirates</option>
+                  <option value="Thriller Bark Pirates">
+                    Thriller Bark Pirates
+                  </option>
+                  <option value="Kuja Pirates">Kuja Pirates</option>
+                  <option value="Heart Pirates">Heart Pirates</option>
+                  <option value="Kid Pirates">Kid Pirates</option>
+                  <option value="Mink Tribe">Mink Tribe</option>
+                </select>
+              </div>
+              <div>
+                <label for="strength-slider">Strength:</label>
+                <input
+                  type="range"
+                  name="strength"
+                  id="strength-slider"
+                  min="1"
+                  max="10"
+                  value="10"
+                />
+                <span id="strength-value">10</span>
+              </div>
+              <div>
+                <label for="faction">Faction:</label>
+                <select name="faction" id="faction">
+                  <option value="">Any</option>
+                  <option value="Pirate">Pirate</option>
+                  <option value="Navy">Navy</option>
+                  <option value="Government">Government</option>
+                  <option value="Revolutionary Army">Revolutionary Army</option>
+                  <option value="Mink">Mink</option>
+                </select>
+              </div>
+              <div>
+                <label for="haki">Haki:</label>
+                <select name="haki" id="haki">
+                  <option value="">Any</option>
+                  <option value="Conquerors">Conquerors</option>
+                  <option value="Armament">Armament</option>
+                  <option value="Observation">Observation</option>
+                </select>
+              </div>
+              <div class="checkboxes">
+                <div>
+                  <label for="isEmperor">Emperor</label>
+                  <input
+                    type="checkbox"
+                    id="isEmperor"
+                    name="isEmperor"
+                    value="emperor"
+                  />
+                </div>
+                <div>
+                  <label for="isWarlord">Warlord</label>
+                  <input
+                    type="checkbox"
+                    id="isWarlord"
+                    name="isWarlord"
+                    value="warlord"
+                  />
+                </div>
+                <div>
+                  <label for="isWorstGeneration">Worst Generation</label>
+                  <input
+                    type="checkbox"
+                    id="isWorstGeneration"
+                    name="isWorstGeneration"
+                    value="worst generation"
+                  />
+                </div>
+                <div>
+                  <label for="isKing">King of the Pirates</label>
+                  <input
+                    type="checkbox"
+                    id="isKing"
+                    name="isKing"
+                    value="king"
+                  />
+                </div>
+              </div>
+            </div>
+            <button type="submit">Apply Filters</button>
+          </form>
+        </div>
+
+        <p id="scroll">Scroll down to see the characters</p>
       </header>
-
-
+      <h2 id="instructions">
+        Select characters to be on your very own pirate crew!
+      </h2>
       <main id="catalog"></main>
-
-      <div class="footer"></div>
+      <footer>
+        <div class="form-container">
+          <button id="add-character">Add Your Own Character</button>
+          <form id="add-character-form" style="display: none">
+            <div class="form-inputs">
+              <div>
+                <label for="add-name">Name</label>
+                <input
+                  type="text"
+                  id="add-name"
+                  name="name"
+                  placeholder="Name"
+                  required
+                />
+              </div>
+              <div>
+                <label for="add-image">Image URL</label>
+                <input
+                  type="url"
+                  id="add-image"
+                  name="image"
+                  placeholder="URL"
+                  required
+                />
+              </div>
+              <div>
+                <label for="add-affiliation">Affiliation</label>
+                <input
+                  type="text"
+                  id="add-affiliation"
+                  name="affiliation"
+                  placeholder="Affiliation"
+                  required
+                />
+              </div>
+              <div>
+                <select id="add-faction" name="faction" required>
+                  <option value="">Select Faction</option>
+                  <option value="Pirate">Pirate</option>
+                  <option value="Navy">Navy</option>
+                  <option value="Government">Government</option>
+                  <option value="Revolutionary Army">Revolutionary Army</option>
+                  <option value="Mink">Mink</option>
+                </select>
+              </div>
+              <div>
+                <label for="add-devilFruit">Devil Fruit</label>
+                <input
+                  type="text"
+                  id="add-devilFruit"
+                  name="devilFruit"
+                  placeholder="Leave empty if none"
+                />
+              </div>
+              <div>
+                <label for="add-haki">Haki</label>
+                <select multiple id="add-haki" name="haki">
+                  <option value="">None</option>
+                  <option value="Conquerors">Conquerors</option>
+                  <option value="Armament">Armament</option>
+                  <option value="Observation">Observation</option>
+                </select>
+              </div>
+              <div>
+                <label for="add-strength">Strength</label>
+                <input
+                  type="number"
+                  id="add-strength"
+                  name="strength"
+                  min="1"
+                  max="10"
+                  required
+                />
+              </div>
+              <div class="checkboxes">
+                <div>
+                  <label for="add-isEmperor"> Emperor</label>
+                  <input type="checkbox" id="add-isEmperor" name="isEmperor" />
+                </div>
+                <div>
+                  <label for="add-isWarlord"> Warlord</label>
+                  <input type="checkbox" id="add-isWarlord" name="isWarlord" />
+                </div>
+                <div>
+                  <label> Worst Generation</label>
+                  <input
+                    type="checkbox"
+                    id="add-isWorstGeneration"
+                    name="isWorstGeneration"
+                  />
+                </div>
+                <div>
+                  <label> Admiral</label>
+                  <input type="checkbox" id="add-isAdmiral" name="isAdmiral" />
+                </div>
+              </div>
+            </div>
+            <button type="submit">Add Character</button>
+          </form>
+        </div>
+      </footer>
     </div>
 
     <script type="text/javascript" src="data.js"></script>
